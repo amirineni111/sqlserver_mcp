@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "MSSQL MCP": {
+      "command": "c:\\Users\\sreea\\OneDrive\\Desktop\\sqlserver_mcp\\SQL-AI-samples\\MssqlMcp\\dotnet\\MssqlMcp\\bin\\Debug\\net8.0\\MssqlMcp.exe",
+      "env": {
+        "CONNECTION_STRING": "Server=LAPTOP-A2OGS41H\\MSSQLSERVER01;Database=stockdata_db;Trusted_Connection=True;TrustServerCertificate=True"
+      }
+    }
+  }
+}

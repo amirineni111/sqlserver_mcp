@@ -1,0 +1,50 @@
+# Cursor Rules — sqlserver_mcp
+
+## Project
+.NET 8 MCP Server (based on Microsoft's MssqlMcp from SQL-AI-samples) bridging AI IDEs with SQL Server stockdata_db.
+
+## Stack
+- .NET 8, C#, Microsoft.Data.SqlClient, MCP C# SDK
+- SQL Server (localhost\MSSQLSERVER01, stockdata_db, Windows Auth)
+- stdio transport (not HTTP)
+- CONNECTION_STRING environment variable for database connectivity
+
+## Architecture
+- `SQL-AI-samples/MssqlMcp/dotnet/MssqlMcp/` — Main project directory
+- `Program.cs` — Entry point: `AddMcpServer()`, `WithStdioServerTransport()`, `WithToolsFromAssembly()`
+- `SqlConnectionFactory.cs` — Reads CONNECTION_STRING env var, creates SqlConnection
+- `Tools/Tools.cs` — Partial class with `ISqlConnectionFactory` DI
+- `Tools/ListTables.cs` — Lists tables from INFORMATION_SCHEMA (read-only)
+- `Tools/DescribeTable.cs` — Get schema/columns/types (read-only)
+- `Tools/ReadData.cs` — Execute SQL queries (read-only)
+- `Tools/CreateTable.cs` — Create new tables
+- `Tools/DropTable.cs` — Drop tables (destructive!)
+- `Tools/InsertData.cs` — Insert rows
+- `Tools/UpdateData.cs` — Update rows
+- All tools use `[McpServerTool]` attribute discovery
+
+## SQL Scripts
+- `trading_system_setup.sql` — Stored procs (sp_get_daily_trading_signals, sp_check_trading_alerts)
+- `daily_trading_workflow.sql` — Morning pre-market workflow
+
+## Configuration
+```json
+"MSSQL MCP": {
+    "type": "stdio",
+    "command": "C:\\Users\\sreea\\OneDrive\\Desktop\\sqlserver_mcp\\SQL-AI-samples\\MssqlMcp\\dotnet\\MssqlMcp\\bin\\Debug\\net8.0\\MssqlMcp.exe",
+    "env": {
+        "CONNECTION_STRING": "Server=localhost\\MSSQLSERVER01;Database=stockdata_db;Trusted_Connection=True;TrustServerCertificate=True"
+    }
+}
+```
+
+## Database Access
+29+ tables, 40+ views in stockdata_db covering:
+- Market data (NASDAQ/NSE/Forex OHLCV)
+- ML predictions (3 pipelines)
+- Technical indicators (RSI, MACD, BB, etc.)
+- Strategy signals and tracking
+- Portfolio and alerts
+
+## Ecosystem
+Infrastructure layer for 7-repo trading platform. Does not train models, run agents, or generate reports. Enables AI-assisted database exploration during development.
