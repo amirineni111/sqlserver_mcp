@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "sqlserver": {
+      "command": "C:\\Users\\sreea\\OneDrive\\Desktop\\sqlserver_mcp\\venv\\Scripts\\python.exe",
+      "args": [
+        "C:\\Users\\sreea\\OneDrive\\Desktop\\sqlserver_mcp\\server.py"
+      ],
+      "env": {
+        "DB_SERVER": "localhost",
+        "DB_PORT": "1433",
+        "DB_NAME": "YourDatabaseName",
+        "DB_USER": "sa",
+        "DB_PASSWORD": "YourActualPassword"
+      }
+    }
+  }
+}
